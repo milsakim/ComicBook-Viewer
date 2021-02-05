@@ -75,9 +75,17 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		162A886C25CBD84C00531EED /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
 		16489AC725C4366400143581 = {
 			isa = PBXGroup;
 			children = (
+				162A886C25CBD84C00531EED /* Remote */,
 				16489AE925C4373300143581 /* App Delegate */,
 				16489AEE25C4378D00143581 /* Category View Controller */,
 				16489AEF25C437CC00143581 /* Comic Book View Controller */,
