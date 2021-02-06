@@ -29,4 +29,23 @@ extension CategoryViewController: UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            deleteCategory(index: indexPath.row)
+        case .insert:
+            print("insert")
+        default:
+            return
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        if categories != nil {
+            let categoryToMove: Category = categories![sourceIndexPath.row]
+            categories!.remove(at: sourceIndexPath.row)
+            categories!.insert(categoryToMove, at: destinationIndexPath.row)
+        }
+    }
+    
 }

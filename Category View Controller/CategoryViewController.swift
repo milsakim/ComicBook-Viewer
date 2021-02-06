@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class CategoryViewController: UIViewController {
     
@@ -18,6 +19,8 @@ class CategoryViewController: UIViewController {
     var categories: [Category]? = nil
     
     var addCategoryButton: UIBarButtonItem? = nil
+    var doneEditingButton: UIBarButtonItem? = nil
+    var editButton: UIBarButtonItem? = nil
    
     // MARK: - Deinit
     
@@ -29,23 +32,60 @@ class CategoryViewController: UIViewController {
         if addCategoryButton != nil {
             addCategoryButton = nil
         }
+        
+        if doneEditingButton != nil {
+            doneEditingButton = nil
+        }
+        
+        if editButton != nil {
+            editButton = nil
+        }
+        
+        print("--- CategoryViewController deinit ---")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-    
-    // MARK: - Set Up Interface
-    
-    func setUpInterface() {
         
+        setupCategoryTableView()
+        setupInterface()
+        
+        if !fetchCategories() {
+            print("--- fetch categories failed ---")
+        }
     }
     
-    func setUpNavigationBarItem() {
+    // MARK: - Setup Category Table View
+    
+    func setupCategoryTableView() {
+        categoryTableView.dataSource = self
+        categoryTableView.delegate = self
+        categoryTableView.register(UINib(nibName: "CategoryTableViewCell", bundle: nil), forCellReuseIdentifier: CategoryTableViewCell.identifier)
+    }
+    
+    // MARK: - Setup Interface
+    
+    func setupInterface() {
+        setupNavigationBarItem()
+    }
+    
+    func setupNavigationBarItem() {
         if addCategoryButton == nil {
             addCategoryButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewCategory))
+        }
+        
+        if doneEditingButton == nil {
+            doneEditingButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(editCategoryTableView))
+        }
+        
+        if editButton == nil {
+            editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editCategoryTableView))
+        }
+        
+        if categoryTableView.isEditing {
+            navigationItem.setRightBarButtonItems([doneEditingButton!, addCategoryButton!], animated: true)
+        } else {
+            navigationItem.setRightBarButtonItems([editButton!, addCategoryButton!], animated: true)
         }
     }
     
@@ -58,7 +98,16 @@ class CategoryViewController: UIViewController {
         // Create Alert Actions
         let createAction: UIAlertAction = UIAlertAction(title: "Create", style: .default) { _ in
             if alertController.textFields?[0].text != nil {
+                let newCategoryID: UUID? = CoreDataManager.sharedInstance.addNewCategory(title: alertController.textFields![0].text!)
                 
+                print("--- New Category ID: \(newCategoryID?.uuidString) ---")
+                
+                if self.fetchCategories() {
+                    self.categoryTableView.reloadData()
+                    
+                    let bottomIndex: IndexPath = IndexPath(row: (self.categories!.count - 1), section: 0)
+                    self.categoryTableView.selectRow(at: bottomIndex, animated: true, scrollPosition: .bottom)
+                }
             }
         }
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -71,6 +120,58 @@ class CategoryViewController: UIViewController {
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc func editCategoryTableView() {
+        if categoryTableView.isEditing {
+            categoryTableView.isEditing = false
+            
+            setupNavigationBarItem()
+        } else {
+            categoryTableView.isEditing = true
+            
+            setupNavigationBarItem()
+        }
+    }
+    
+    // MARK: - Fetch Data
+    
+    func fetchCategories() -> Bool {
+        print("--- fetchCategories() ---")
+        
+        // Create Fetch Request
+        let fetchRequest: NSFetchRequest = Category.fetchRequest()
+        
+        // Configure Fetch Request
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ComicBook.creationDate), ascending: true)]
+        
+        // Perform Fetch Request
+        do {
+            categories = try CoreDataManager.sharedInstance.managedObjectContext?.fetch(fetchRequest)
+            
+            print("--- categories: \(categories) ---")
+            
+            return true
+        } catch {
+            return false
+        }
+    }
+    
+    // MARK: -
+    
+    func deleteCategory(index: Int) {
+        if categories != nil {
+            if index < categories!.count {
+                print("--- Category to Delete: \(categories![index].title!) ---")
+                
+                var categoryToDelete: Category? = categories![index]
+                
+                if CoreDataManager.sharedInstance.deleteCategory(category: categoryToDelete) {
+                    categories!.remove(at: index)
+                    categoryTableView.reloadData()
+                }
+            }
+        }
     }
     
     /*

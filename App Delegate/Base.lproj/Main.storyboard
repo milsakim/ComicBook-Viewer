@@ -92,22 +92,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X7t-pd-Cwm">
-                                <rect key="frame" x="184" y="433" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XGD-GU-Hw5">
+                                <rect key="frame" x="186" y="437.5" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gj1-X2-uyN">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="eAj-bw-6W1"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="X7t-pd-Cwm" firstAttribute="centerX" secondItem="hpv-qZ-r4G" secondAttribute="centerX" id="U8C-dx-Kp0"/>
-                            <constraint firstItem="X7t-pd-Cwm" firstAttribute="centerY" secondItem="hpv-qZ-r4G" secondAttribute="centerY" id="rQC-WQ-MIY"/>
+                            <constraint firstItem="gj1-X2-uyN" firstAttribute="leading" secondItem="eAj-bw-6W1" secondAttribute="leading" id="O4h-FA-m5M"/>
+                            <constraint firstItem="gj1-X2-uyN" firstAttribute="top" secondItem="eAj-bw-6W1" secondAttribute="top" id="PLN-qO-zaT"/>
+                            <constraint firstItem="gj1-X2-uyN" firstAttribute="bottom" secondItem="eAj-bw-6W1" secondAttribute="bottom" id="R7S-I4-7nr"/>
+                            <constraint firstItem="XGD-GU-Hw5" firstAttribute="centerX" secondItem="hpv-qZ-r4G" secondAttribute="centerX" id="fDB-XZ-ngt"/>
+                            <constraint firstItem="gj1-X2-uyN" firstAttribute="trailing" secondItem="eAj-bw-6W1" secondAttribute="trailing" id="rMF-8i-UEs"/>
+                            <constraint firstItem="XGD-GU-Hw5" firstAttribute="centerY" secondItem="hpv-qZ-r4G" secondAttribute="centerY" id="vN9-ho-TPi"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="comicBookTableView" destination="gj1-X2-uyN" id="SLU-BM-O9m"/>
+                        <outlet property="messageLabel" destination="XGD-GU-Hw5" id="3ie-yw-sNH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TVm-kh-jBk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-584" y="149"/>
+            <point key="canvasLocation" x="-584.05797101449275" y="148.66071428571428"/>
         </scene>
     </scenes>
     <resources>

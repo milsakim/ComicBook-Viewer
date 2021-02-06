@@ -26,12 +26,16 @@ class CoreDataManager {
     
     private init() {
         print("--- CoreDataManager init() called ---")
+        
+        createCoreDataStack()
     }
     
     // MARK: - Creating Core Data Stack
     
     private func createCoreDataStack() {
-        
+        createManagedObjectModel()
+        createPersistentStoreCoordinator()
+        createManagedObjectContext()
     }
     
     private func createManagedObjectModel() {
@@ -107,7 +111,11 @@ class CoreDataManager {
             category.modificationDate = Date()
             category.lastAccessedDate = Date()
             
-            return category.id
+            if save() {
+                return category.id
+            } else {
+                return nil
+            }
         } else {
             return nil
         }
@@ -170,15 +178,29 @@ class CoreDataManager {
             page.width = Double(width!)
             page.index = 1
             
-            
-            
             return page.id
         } else {
             return nil
         }
     }
     
-    // MARK: - Saving Managed Object
+    // MARK: - Delete Managed Objec
+    
+    func deleteCategory(category: Category?) -> Bool {
+        if category != nil, managedObjectContext != nil {
+            managedObjectContext!.delete(category!)
+            
+            if save() {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
+    }
+    
+    // MARK: - Save Managed Object
     func save() -> Bool {
         if managedObjectContext!.hasChanges {
             do {
