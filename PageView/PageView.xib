@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PageView" customModule="CoreDataSample" customModuleProvider="target">
+            <connections>
+                <outlet property="imageView" destination="3aw-Pr-DD9" id="X8G-B1-iW2"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3aw-Pr-DD9">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="ccg-Fh-872" appends="YES" id="pZe-1v-sgK"/>
+                    </connections>
+                </imageView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="3aw-Pr-DD9" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="QgJ-mm-9Ba"/>
+                <constraint firstItem="3aw-Pr-DD9" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="aZ6-fy-Nsn"/>
+                <constraint firstItem="3aw-Pr-DD9" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="mb8-Bj-yUC"/>
+                <constraint firstItem="3aw-Pr-DD9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="wMh-mc-4Rx"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="ccg-Fh-872" appends="YES" id="6n2-1E-5bo"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="152.67857142857142"/>
+        </view>
+        <pinchGestureRecognizer id="ccg-Fh-872">
+            <connections>
+                <action selector="handlePinch:" destination="-1" id="SkL-Oe-AST"/>
+            </connections>
+        </pinchGestureRecognizer>
+    </objects>
+</document>

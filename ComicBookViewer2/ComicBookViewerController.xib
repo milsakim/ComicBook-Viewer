@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ComicBookViewerController" customModule="CoreDataSample" customModuleProvider="target">
+            <connections>
+                <outlet property="baseView" destination="Yvn-Hs-Ow6" id="cbZ-13-qL9"/>
+                <outlet property="leftButton" destination="50T-hU-AYx" id="xCO-Ta-Rbe"/>
+                <outlet property="rightButton" destination="ZUt-Js-HCj" id="p5w-kX-D1a"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="50T-hU-AYx">
+                    <rect key="frame" x="20" y="428" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="XTn-tw-lZX"/>
+                        <constraint firstAttribute="height" constant="40" id="nRC-Cs-Xhg"/>
+                    </constraints>
+                    <connections>
+                        <action selector="previousPage:" destination="-1" eventType="touchUpInside" id="xOK-RZ-7aY"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZUt-Js-HCj">
+                    <rect key="frame" x="354" y="428" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="4se-Il-uwu"/>
+                        <constraint firstAttribute="width" constant="40" id="VWG-RC-gkU"/>
+                    </constraints>
+                    <connections>
+                        <action selector="nextPage:" destination="-1" eventType="touchUpInside" id="LKh-2R-r3a"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yvn-Hs-Ow6">
+                    <rect key="frame" x="68" y="44" width="278" height="818"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <gestureRecognizers/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="Rlk-hp-xHT" appends="YES" id="Tzb-yR-HbX"/>
+                    </connections>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ZUt-Js-HCj" secondAttribute="trailing" constant="20" id="72b-7K-QDd"/>
+                <constraint firstItem="Yvn-Hs-Ow6" firstAttribute="leading" secondItem="50T-hU-AYx" secondAttribute="trailing" constant="8" symbolic="YES" id="Byp-7I-UT0"/>
+                <constraint firstItem="Yvn-Hs-Ow6" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="OBu-d1-57N"/>
+                <constraint firstItem="ZUt-Js-HCj" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="STC-TG-DmC"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Yvn-Hs-Ow6" secondAttribute="bottom" id="WPH-p9-ZiY"/>
+                <constraint firstItem="50T-hU-AYx" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="dV3-Yk-avn"/>
+                <constraint firstItem="50T-hU-AYx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="dky-a1-8ve"/>
+                <constraint firstItem="Yvn-Hs-Ow6" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="x0U-0Y-zcV"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="Jia-s2-560" appends="YES" id="9yX-bI-X9p"/>
+                <outletCollection property="gestureRecognizers" destination="Rlk-hp-xHT" appends="YES" id="3JP-eu-cgH"/>
+            </connections>
+            <point key="canvasLocation" x="-233.33333333333334" y="152.67857142857142"/>
+        </view>
+        <tapGestureRecognizer id="Jia-s2-560">
+            <connections>
+                <action selector="handleTap:" destination="-1" id="mbu-x2-uWr"/>
+            </connections>
+        </tapGestureRecognizer>
+        <pinchGestureRecognizer id="Rlk-hp-xHT">
+            <connections>
+                <action selector="handlePinch:" destination="-1" id="NKQ-hc-WFI"/>
+            </connections>
+        </pinchGestureRecognizer>
+    </objects>
+</document>

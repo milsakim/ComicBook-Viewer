@@ -16,9 +16,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
         
         print("--- scene ---")
+        
+        setupSplitViewController(windowScene: windowScene)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -50,7 +52,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         print("--- sceneWiilenterForeground ---")
         createDefaultDirectory()
-        CoreDataManager.sharedInstance
+//        CoreDataManager.sharedInstance
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -59,6 +61,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
         
         print("--- sceneDidEnterBackground ---")
+    }
+    
+    // MARK: -
+    
+    func setupSplitViewController(windowScene: UIWindowScene) {
+        print("\(window)")
+        
+        if window == nil {
+            let mainWindow: UIWindow = UIWindow(windowScene: windowScene)
+            
+            let splitViewController: UISplitViewController = UISplitViewController(style: .tripleColumn)
+            
+            let categoryController: CategoryController = CategoryController()
+            let categoryNavigation: UINavigationController = UINavigationController(rootViewController: categoryController)
+            
+            let bookListController: BookListController = BookListController()
+            let bookListNavigation: UINavigationController = UINavigationController(rootViewController: bookListController)
+            
+            let comicBookController: ComicBookController = ComicBookController()
+            let comicBookNavigation: UINavigationController = UINavigationController(rootViewController: comicBookController)
+            
+            splitViewController.setViewController(categoryNavigation, for: .primary)
+            splitViewController.setViewController(bookListNavigation, for: .supplementary)
+            splitViewController.setViewController(comicBookNavigation, for: .secondary)
+
+            splitViewController.preferredDisplayMode = .twoDisplaceSecondary
+            
+            mainWindow.rootViewController = splitViewController
+        
+            self.window = mainWindow
+            mainWindow.makeKeyAndVisible()
+        }
     }
 
     // MARK: -
