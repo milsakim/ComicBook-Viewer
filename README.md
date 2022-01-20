@@ -1,2 +1,2 @@
-# CoreData-Sample
-A sample program of using Core Data Framework 
+# ComicBook-Viewer
+Add images of comicbook and organize them by categories on iPad.
