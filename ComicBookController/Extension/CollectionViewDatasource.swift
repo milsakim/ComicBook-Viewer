@@ -40,12 +40,9 @@ extension ComicBookController: UICollectionViewDataSource {
                 
                 if comicBookDirectory != nil {
                     let imageURL: URL = comicBookDirectory!.appendingPathComponent("\(pages![indexPath.row].id!)-thumbnail.jpg")
-                    print("$$$ \(imageURL.path) $$$")
                     cell.imageView.image = UIImage(contentsOfFile: imageURL.path)
                     cell.indexLabel.text = "\(pages![indexPath.row].index)"
                 }
-                
-                print("$$$ \(pages![indexPath.row].index) ---")
             }
         }
         

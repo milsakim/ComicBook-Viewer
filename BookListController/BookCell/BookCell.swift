@@ -23,9 +23,6 @@ class BookCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        
-        print("--- BookCell awakeFromNib() ---")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

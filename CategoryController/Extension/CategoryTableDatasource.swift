@@ -18,8 +18,6 @@ extension CategoryController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("--- CategoryController Table View Datasource cellForRowAt ---")
-        
         let cell: CategoryCell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.reuseIdentifier) as! CategoryCell
         
         if categories != nil {

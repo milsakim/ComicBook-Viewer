@@ -14,18 +14,18 @@ enum bookListDisplayMode {
     case dataExist
 }
 
-class BookListController: UIViewController, CreateComicBookViewDelegate {
+class ComicBookListController: UIViewController {
     
-    // MARK: - Outlet
+    // MARK: - Outlets
     
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    // MARK: - Property
+    // MARK: - Properties
     
     var category: Category? = nil {
         didSet {
-            print("--- BookListController category: \(category!.title!) ---")
+            print("$$$$$$$$$$")
             reloadTableView()
         }
     }
@@ -39,12 +39,10 @@ class BookListController: UIViewController, CreateComicBookViewDelegate {
     var backgroundView: UIView? = nil
     var createComicBookView: CreateComicBookView? = nil
     
-    // MARK: - Initialize
+    // MARK: - Initializers
     
     init() {
         super.init(nibName: "BookListController", bundle: .main)
-        
-        print("--- BookListController init() ---")
     }
     
     required init?(coder: NSCoder) {
@@ -55,7 +53,7 @@ class BookListController: UIViewController, CreateComicBookViewDelegate {
         
     }
     
-    // MARK: - Deinitialize
+    // MARK: - Deinitializer
     
     deinit {
         if category != nil {
@@ -87,12 +85,16 @@ class BookListController: UIViewController, CreateComicBookViewDelegate {
         }
     }
     
-    // MARK: -
+    // MARK: - View Life Cycle Related Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         commonInit()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     // MARK: -
@@ -103,7 +105,7 @@ class BookListController: UIViewController, CreateComicBookViewDelegate {
         setupButtons()
     }
     
-    // MARK: - Interface Related Method
+    // MARK: - Interface Related Methods
     
     func setupButtons() {
         if addButton == nil {
@@ -146,6 +148,7 @@ class BookListController: UIViewController, CreateComicBookViewDelegate {
         
         if createComicBookView == nil, splitViewController != nil {
             createComicBookView = CreateComicBookView(frame: rect)
+            createComicBookView?.category = category
             createComicBookView?.delegate = self
         }
         
@@ -173,61 +176,5 @@ class BookListController: UIViewController, CreateComicBookViewDelegate {
     @objc func editTable() {
         
     }
-
-    // MARK: - Fetch Data
-    
-    func fetchData() -> Bool {
-        if category != nil {
-            comicBooks = category!.comicBooks?.allObjects as? [ComicBook]
-            
-            if comicBooks != nil {
-                comicBooks!.sort(by: {
-                    $0.creationDate! > $1.creationDate!
-                })
-            }
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    // MARK: - Create Comic Book View Delegate Method
-    
-    func didFinishCreating(title: String, author: String?, thumbnail: UIImage?) {
-        print("--- didFinishCreating() ---")
-        
-        if category != nil {
-            CoreDataManager.sharedInstance.addComicBook(category: category!, title: title, author: author, thumbnail: thumbnail)
-            reloadTableView()
-        }
-        
-        removeView()
-    }
-    
-    func removeView() {
-        print("--- removeView() ---")
-        
-        backgroundView?.removeFromSuperview()
-        createComicBookView?.baseView.removeFromSuperview()
-        createComicBookView = nil
-    }
-    
-    func presentImagePicker(controller: UIImagePickerController) {
-        present(controller, animated: true, completion: nil)
-    }
-    
-    func dismissImagePicker() {
-        dismiss(animated: true, completion: nil)
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

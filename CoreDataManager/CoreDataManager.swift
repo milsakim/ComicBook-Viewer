@@ -293,7 +293,7 @@ class CoreDataManager {
                     let thumbnailURL: URL = comicBookDirectory!.appendingPathComponent("\(page.id!.uuidString)-thumbnail.jpg")
                     
                     let size: CGSize = CGSize(width: 120, height: 160)
-                    let resizedImage = resizeImage(at: url, for: size)
+                    let resizedImage = UIImage.resizeImage(at: url, for: size)
                     
                     if resizedImage != nil {
                         if let data = resizedImage!.jpegData(compressionQuality: 0.5) {
@@ -391,6 +391,7 @@ class CoreDataManager {
     
     // MARK: - Image Resizing Method
     
+    /*
     func resizeImage(at url: URL, for size: CGSize) -> UIImage? {
         guard let image = UIImage(contentsOfFile: url.path) else {
             return nil
@@ -402,5 +403,5 @@ class CoreDataManager {
             image.draw(in: CGRect(origin: .zero, size: size))
         }
     }
-    
+    */
 }

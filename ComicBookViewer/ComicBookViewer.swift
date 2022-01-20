@@ -41,8 +41,6 @@ class ComicBookViewer: UIViewController {
     
     init() {
         super.init(nibName: "ComicBookViewer", bundle: .main)
-        
-        print("--- Comic Book Viewer init ---")
     }
     
     required init?(coder: NSCoder) {
@@ -165,18 +163,13 @@ class ComicBookViewer: UIViewController {
                     let image: UIImage? = UIImage(contentsOfFile: imageURL.path)
                     
                     if image != nil {
-                        print("$$$ image $$$")
                         if images == nil {
                             images = []
                         }
                         
                         images!.append(image!)
-                    } else {
-                        print("$$$ image no no $$$")
                     }
                 }
-                
-                print("--- \(images) ---")
             }
         }
     }

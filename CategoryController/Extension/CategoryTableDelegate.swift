@@ -12,10 +12,9 @@ extension CategoryController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if categories != nil, indexPath.row < categories!.count {
             if splitViewController != nil {
-                print("--- splitViewController != nil ---")
                 
                 let bookListNavigation: UINavigationController = splitViewController!.viewControllers[1] as! UINavigationController
-                let bookListController: BookListController = bookListNavigation.viewControllers[0] as! BookListController
+                let bookListController: ComicBookListController = bookListNavigation.viewControllers[0] as! ComicBookListController
                 
                 bookListController.category = categories![indexPath.row]
                 
@@ -23,6 +22,8 @@ extension CategoryController: UITableViewDelegate {
                 let comicBookController: ComicBookController = comicBookNavigation.viewControllers[0] as! ComicBookController
                 
                 comicBookController.comicBook = nil
+                
+                splitViewController!.show(.supplementary)
             }
         }
     }

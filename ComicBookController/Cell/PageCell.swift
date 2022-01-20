@@ -17,9 +17,6 @@ class PageCell: UICollectionViewCell {
     // MARK: -
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        
-        print("--- PageCell awakeFromNib() ---")
     }
 
 }

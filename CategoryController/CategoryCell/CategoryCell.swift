@@ -36,9 +36,6 @@ class CategoryCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        
-        print("--- CategoryCell awakeFromNib() ---")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -50,14 +47,10 @@ class CategoryCell: UITableViewCell {
     // MARK:
     
     func setTitle(text: String) {
-        print("--- CategoryCell setTitle ---")
-        
         title.text = text
     }
     
     func setComicBookCount(text: String) {
-        print("--- CategoryCell setComicBookCount ---")
-        
         comicBookCountLabel.text = text
     }
     

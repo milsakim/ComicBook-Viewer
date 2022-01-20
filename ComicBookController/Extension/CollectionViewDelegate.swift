@@ -10,8 +10,6 @@ import UIKit
 extension ComicBookController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("$$$ \(pages![indexPath.row].id!)")
-        
         /*
         if viewer == nil {
             viewer = ComicBookViewer()

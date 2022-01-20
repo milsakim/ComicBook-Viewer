@@ -13,15 +13,16 @@ extension ComicBookViewerController: UIPageViewControllerDataSource {
         print("--- Page View Controller Datasource pageViewController(_:viewControllerBefore:) ---")
         
         if pageIDs != nil {
-            let pageViewBefore: PageView = viewController as! PageView
+            // let pageViewBefore: PageView = viewController as! PageView
+            let pageViewBefore: PageViewController = viewController as! PageViewController
             let indexBefore: Int? = pageIDs!.firstIndex(of: pageViewBefore.id!)
             
             if indexBefore != nil {
+                if index != nil {
+                    index! -= 1
+                }
+                
                 return pageViewAtIndex(at: indexBefore! - 1)
-            }
-            
-            if index != nil {
-                index! -= 1
             }
         }
 
@@ -32,15 +33,16 @@ extension ComicBookViewerController: UIPageViewControllerDataSource {
         print("--- Page View Controller Datasource pageViewController(_:viewControllerAfter:) ---")
         
         if pageIDs != nil {
-            let pageViewAfter: PageView = viewController as! PageView
+            // let pageViewAfter: PageView = viewController as! PageView
+            let pageViewAfter: PageViewController = viewController as! PageViewController
             let indexAfter: Int? = pageIDs!.firstIndex(of: pageViewAfter.id!)
             
             if indexAfter != nil {
+                if index != nil {
+                    index! += 1
+                }
+                
                 return pageViewAtIndex(at: indexAfter! + 1)
-            }
-            
-            if index != nil {
-                index! += 1
             }
         }
         

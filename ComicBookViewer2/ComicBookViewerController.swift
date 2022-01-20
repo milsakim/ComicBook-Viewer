@@ -97,15 +97,26 @@ class ComicBookViewerController: UIViewController {
             pageViewController!.view.frame = baseView.frame
             pageViewController!.view.backgroundColor = .black
             
-            pageViewController!.didMove(toParent: self)
+            // pageViewController!.didMove(toParent: self)
             
-            
+            /*
             if index != nil {
                 if let startViewController: PageView = pageViewAtIndex(at: index!) {
                     pageViewController!.setViewControllers([startViewController], direction: .forward, animated: true, completion: nil)
                 }
             } else {
                 if let startViewController: PageView = pageViewAtIndex(at: 0) {
+                    pageViewController!.setViewControllers([startViewController], direction: .forward, animated: true, completion: nil)
+                }
+            }
+            */
+            
+            if index != nil {
+                if let startViewController: PageViewController = pageViewAtIndex(at: index!) {
+                    pageViewController!.setViewControllers([startViewController], direction: .forward, animated: true, completion: nil)
+                }
+            } else {
+                if let startViewController: PageViewController = pageViewAtIndex(at: 0) {
                     pageViewController!.setViewControllers([startViewController], direction: .forward, animated: true, completion: nil)
                 }
             }
@@ -117,13 +128,22 @@ class ComicBookViewerController: UIViewController {
 
     // MARK: -
     
-    func pageViewAtIndex(at index: Int) -> PageView? {
+    func pageViewAtIndex(at index: Int) -> PageViewController? {
         if pageIDs != nil {
             if index >= 0, index < pageIDs!.count {
+                /*
                 let pageView: PageView = PageView()
                 
                 pageView.id = pageIDs![index]
                 pageView.imageURL = createImageURL(of: pageIDs![index])
+                */
+                
+                let pageView: PageViewController = PageViewController()
+                pageView.id = pageIDs![index]
+                pageView.imageURL = createImageURL(of: pageIDs![index])
+                pageView.baseViewSize = baseView.bounds
+                
+                self.index = index
                 
                 return pageView
             } else {
@@ -194,7 +214,9 @@ class ComicBookViewerController: UIViewController {
         print(#function)
         
         if pageViewController != nil, index != nil {
-            pageViewController!.setViewControllers([pageViewAtIndex(at: index! - 1)!], direction: .reverse, animated: true, completion: nil)
+            if (index! - 1) >= 0 {
+                pageViewController!.setViewControllers([pageViewAtIndex(at: index! - 1)!], direction: .reverse, animated: true, completion: nil)
+            }
         }
     }
     
@@ -202,7 +224,9 @@ class ComicBookViewerController: UIViewController {
         print(#function)
         
         if pageViewController != nil, index != nil {
-            pageViewController!.setViewControllers([pageViewAtIndex(at: index! + 1)!], direction: .forward, animated: true, completion: nil)
+            if (index! + 1) < pageIDs!.count {
+                pageViewController!.setViewControllers([pageViewAtIndex(at: index! + 1)!], direction: .forward, animated: true, completion: nil)
+            }
         }
     }
     

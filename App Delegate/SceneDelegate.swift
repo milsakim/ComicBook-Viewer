@@ -18,8 +18,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        print("--- scene ---")
-        
         setupSplitViewController(windowScene: windowScene)
     }
 
@@ -28,29 +26,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This occurs shortly after the scene enters the background, or when its session is discarded.
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
-        
-        print("--- sceneDidDisconnect ---")
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-        
-        print("--- sceneDidBecomeActive ---")
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
-        
-        print("--- sceneWillResignActive ---")
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
         
-        print("--- sceneWiilenterForeground ---")
         createDefaultDirectory()
 //        CoreDataManager.sharedInstance
     }
@@ -59,24 +50,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-        
-        print("--- sceneDidEnterBackground ---")
     }
     
     // MARK: -
     
     func setupSplitViewController(windowScene: UIWindowScene) {
-        print("\(window)")
-        
         if window == nil {
             let mainWindow: UIWindow = UIWindow(windowScene: windowScene)
             
+            let splitViewDelegate: MySplitViewControllerDelegate = MySplitViewControllerDelegate()
+            
             let splitViewController: UISplitViewController = UISplitViewController(style: .tripleColumn)
+            splitViewController.delegate = splitViewDelegate
             
             let categoryController: CategoryController = CategoryController()
             let categoryNavigation: UINavigationController = UINavigationController(rootViewController: categoryController)
             
-            let bookListController: BookListController = BookListController()
+            let bookListController: ComicBookListController = ComicBookListController()
             let bookListNavigation: UINavigationController = UINavigationController(rootViewController: bookListController)
             
             let comicBookController: ComicBookController = ComicBookController()
@@ -107,8 +97,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if urls.count > 0 {
             let documentDirectoryURL: URL = urls[0]
             
-            print("--- Documents Directory: \(documentDirectoryURL.path) ---")
-            
             // Create URL for the App's Default Directory
             let defaultDirectoryURL: URL = documentDirectoryURL.appendingPathComponent(DirectoryPath.defaultDirectory.rawValue)
             
@@ -116,10 +104,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             do {
                 try fileManager.createDirectory(at: defaultDirectoryURL, withIntermediateDirectories: true, attributes: nil)
             } catch {
-                print("--- Fail to Create Default Directory ---")
+                
             }
         } else {
-            print("--- Fail to Get Documents Directory URL ---")
+            
         }
     }
 

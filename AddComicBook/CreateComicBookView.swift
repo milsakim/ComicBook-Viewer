@@ -9,7 +9,7 @@ import UIKit
 
 class CreateComicBookView: UIView {
     
-    // MARK: - Outlet
+    // MARK: - Outlets
     
     @IBOutlet var baseView: UIView!
     
@@ -25,9 +25,11 @@ class CreateComicBookView: UIView {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var authorTextField: UITextField!
     
-    // MARK: - Property
+    // MARK: - Properties
     
-    weak var delegate: CreateComicBookViewDelegate? = nil
+    weak var delegate: CreateComicBookViewDelegate?
+    
+    var category: Category?
     
     var thumbnailImage: UIImage? = nil {
         didSet {
@@ -37,12 +39,10 @@ class CreateComicBookView: UIView {
     
     var imagePickerController: UIImagePickerController? = nil
     
-    // MARK: - Initialize
+    // MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        print("--- CreateComicBookView init ---")
         
         commonInit()
     }
@@ -50,12 +50,10 @@ class CreateComicBookView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
-        print("--- CreateComicBookView init(coder:) ---")
-        
         commonInit()
     }
     
-    // MARK: -
+    // MARK: - Deinitializer
     
     deinit {
         print(#function)
@@ -77,16 +75,13 @@ class CreateComicBookView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        print("--- CreateComicBookView awakerFromNib ---")
-        
+    
         commonInit()
     }
     
-    // MARK: -
+    // MARK: - Common Initialize
     
     private func commonInit() {
-        print("--- CreateComicBookView commonInit ---")
         Bundle.main.loadNibNamed("CreateComicBookView", owner: self, options: nil)
         
         if self.baseView != nil {
@@ -94,8 +89,7 @@ class CreateComicBookView: UIView {
             baseView.backgroundColor = .white
         }
         
-        print("--- bounds: \(self.bounds) ---")
-        
+        updateThumbnailImageView()
         /*
         guard let loadedNib = Bundle.main.loadNibNamed("CreateComicBookView", owner: self, options: nil), let view = loadedNib.first as? UIView else {
             print("--- CreateComicBookView commonInit return ---")
@@ -132,91 +126,11 @@ class CreateComicBookView: UIView {
         */
     }
     
-    // MARK: -
-    
-    func createThumbnail(url: URL) {
-        let frameImage: UIImage? = UIImage(named: "ThumbnailFrame")
-        let selectedImage: UIImage? = UIImage(contentsOfFile: url.path)
-        
-        if frameImage != nil, selectedImage != nil {
-            let rect: CGRect = CGRect(origin: CGPoint(x: 0, y: 0), size: frameImage!.size)
-            
-            UIGraphicsBeginImageContextWithOptions(frameImage!.size, false, frameImage!.scale)
-            
-            selectedImage!.draw(in: rect)
-            frameImage!.draw(in: rect)
-            
-            thumbnailImage = UIGraphicsGetImageFromCurrentImageContext()
-            
-            UIGraphicsEndImageContext()
-        }
-    }
-    
-    func updateThumbnailImageView() {
-        if thumbnailImage != nil {
-            thumbnailImageView.image = thumbnailImage
-        } else {
-            thumbnailImageView.image = UIImage(named: "NoSelectedThumbnail")
-        }
-    }
-    
-    // MARK: - Action
-    
-    @IBAction func cancel(_ sender: Any) {
-        print(#function)
-        
-        guard let delegate = self.delegate else {
-            return
-        }
-        
-        thumbnailImage = nil
-        updateThumbnailImageView()
-        
-        delegate.removeView()
-    }
-    
-    @IBAction func create(_ sender: Any) {
-        print(#function)
-        
-        guard let title = titleTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
-            return
-        }
-        let author = authorTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        guard let delegate = self.delegate else {
-            return
-        }
-        
-        delegate.didFinishCreating(title: title, author: author, thumbnail: thumbnailImage)
-    }
-    
-    @IBAction func importImage(_ sender: Any) {
-        print(#function)
-        
-        if imagePickerController == nil {
-            imagePickerController = UIImagePickerController()
-            imagePickerController!.delegate = self
-            imagePickerController!.sourceType = .photoLibrary
-        }
-        
-        if imagePickerController != nil, delegate != nil {
-            delegate!.presentImagePicker(controller: imagePickerController!)
-        }
-    }
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
 }
 
 protocol CreateComicBookViewDelegate: AnyObject {
     
-    func didFinishCreating(title: String, author: String?, thumbnail: UIImage?)
+    func didFinishCreatingComicBook(success: Bool)
     
     func removeView()
     

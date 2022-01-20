@@ -26,7 +26,6 @@ class ComicBookController: UIViewController {
     
     var comicBook: ComicBook? = nil {
         didSet {
-            print("%%%%%%%%%%%%%%%%%%")
             setupTitle()
             updateDisplayMode()
             reloadCollectionView()
@@ -65,8 +64,6 @@ class ComicBookController: UIViewController {
     
     init() {
         super.init(nibName: "ComicBookController", bundle: .main)
-        
-        print("--- ComicBookController init() ---")
     }
     
     required init?(coder: NSCoder) {
@@ -76,7 +73,6 @@ class ComicBookController: UIViewController {
     // MARK: - Deinitialize
     
     deinit {
-        print(#function)
         
         if comicBook != nil {
             comicBook = nil
@@ -120,15 +116,11 @@ class ComicBookController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print("--- ComicBookController viewDidLoad() ---")
-        
         commonInit()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        print("--- ComicBookController viewWillAppear() ---")
         
         if viewer2 != nil {
             viewer2 = nil
@@ -138,8 +130,6 @@ class ComicBookController: UIViewController {
     // MARK: -
     
     func commonInit() {
-        print("--- ComicBookController commonInit() ---")
-        
         setupTitle()
         setupButton()
         displayButton()
@@ -156,8 +146,6 @@ class ComicBookController: UIViewController {
     }
     
     func setupButton() {
-        print("--- ComicBookController setupButton() ---")
-        
         if addButton == nil {
             addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPage))
         }
@@ -178,8 +166,6 @@ class ComicBookController: UIViewController {
     }
     
     func displayButton() {
-        print("--- ComicBookController displayButton() ---")
-        
         switch displayMode {
         case .noComicBook:
             if addButton != nil, editButton != nil {
@@ -230,11 +216,8 @@ class ComicBookController: UIViewController {
                     let image: UIImage? = UIImage(contentsOfFile: imageURL.path)
                     
                     if image != nil {
-                        print("$$$ image $$$")
                         images!.append(image!)
-                    } else {
-                        print("$$$ image no no $$$")
-                    }
+                    } 
                 }
             }
         }
